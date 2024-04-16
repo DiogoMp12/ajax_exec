@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
     fetch ('https://api.github.com/users/uDiogoP')
     .then(function(res){
+        if (!res.ok){
+            throw new Error('erro ao carregar os dados do usuário')
+        }
         return res.json();
     })
     .then(function(json){
@@ -17,7 +20,11 @@ document.addEventListener('DOMContentLoaded', function(){
         profileAvatarElement.src = json.avatar_url;
         followingElement.innerText = json.following;
         followersElement.innerText = json.followers;
-        repElement.innerText = json.public_rep;
+        repElement.innerText = json.public_repos;
         linkElement.href = json.html_url;
+    })
+    .catch(function(erro){
+        console.error(erro);
+        alert("ocorreu um erro na nossa API")
     })
 })
